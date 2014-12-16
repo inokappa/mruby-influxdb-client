@@ -20,9 +20,10 @@ class Influxdb
     end
     def post(data)
       req_json = {
-        :params  => data[:params],
+        :params  => data,
       }
       http = HttpRequest.new()
+      p request_url
       http.post(request_url, JSON::stringify(req_json), @request)
     end
   end
