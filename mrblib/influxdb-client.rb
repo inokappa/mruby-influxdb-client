@@ -11,20 +11,10 @@ class Influxdb
         'User-Agent'     => @ua,
       }
     end
-    def request_url
-      #  /db/<database>/series?u=<user>&p=<pass>
-      @url + "/db/" + @db + "series?" + "u=" + @user + "&" + "p=" + @pass
-    end
-    def headers
-      @request
-    end
     def post(data)
-      req_json = {
-        :params  => data,
-      }
+      request_url = "#{@url}/db/#{@db}/series?u=#{@user}&p=#{@pass}"
       http = HttpRequest.new()
-      p request_url
-      http.post(request_url, JSON::stringify(req_json), @request)
+      http.post(request_url, JSON::stringify(data), @request)
     end
   end
 end
