@@ -60,6 +60,31 @@ curl -X POST 'http://localhost:8086/db?u=root&p=root' -d '{"name": "foo"}'
 curl -G 'http://localhost:8086/db/foo/series?u=root&p=root' --data-urlencode "q=select * from Disk_Used"
 ```
 
+result.
+
+```bash
+curl -s -G 'http://localhost:8086/db/foo/series?u=root&p=root' --data-urlencode "q=select * from Disk_Used limit 1" | jq .
+[
+  {
+    "points": [
+      [
+        1418742770498,
+        140001,
+        19.1,
+        "hogehoge"
+      ]
+    ],
+    "columns": [
+      "time",
+      "sequence_number",
+      "value",
+      "host"
+    ],
+    "name": "Disk_Used"
+  }
+]
+```
+
 # License
 under the MIT License:
 
