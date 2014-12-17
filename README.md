@@ -18,7 +18,11 @@ end
 
 ## example
 
+### Single Datapoint
+
 ```ruby
+#!/path/to/mruby
+
 config = {
   :url  => "http://127.0.0.1:8086",
   :db   => "foo",
@@ -29,16 +33,61 @@ config = {
 
 i = Influxdb::Client.new(config)
 
+points = [ ARGV[0].to_f, "hogehoge" ]
+query = "select * from Disk_Used limit 1"
+
 data = [{
   :name => "Disk_Used",
   :columns => ["value", "host"],
   :points => [
-    [19.1, "hogehoge"]
+    points
   ]
 }]
 
 puts "request:  #{JSON::stringify(data)}"
 puts "response: #{i.post(data)["body"]}"
+
+puts "response: #{i.get_metrics(query).body}"
+```
+
+```bash
+/path/to/influxdb-client.rb `cho $RANDOM`
+```
+
+### Multi Datapoints
+
+```ruby
+#!/path/to/mruby
+
+config = {
+  :url  => "http://127.0.0.1:8086",
+  :db   => "foo",
+  :ua   => "mruby-influxdb-client",
+  :user => "root",
+  :pass => "root",
+}
+
+i = Influxdb::Client.new(config)
+
+points = [ ARGV[0].to_f, ARGV[1].to_f, ARGV[2].to_f ]
+query = "select * from Test_Metrics limit 1"
+
+data = [{
+  :name => "Test_Metrics",
+  :columns => ["value1", "value2", "value3"],
+  :points => [
+    points
+  ]
+}]
+
+puts "request:  #{JSON::stringify(data)}"
+puts "response: #{i.post(data)["body"]}"
+
+puts "response: #{i.get_metrics(query).body}"
+```
+
+```bash
+/path/to/influxdb-client.rb `echo $RANDOM` `echo $RANDOM` `echo $RANDOM`
 ```
 
 ## InfluxDB
@@ -84,6 +133,11 @@ curl -s -G 'http://localhost:8086/db/foo/series?u=root&p=root' --data-urlencode 
   }
 ]
 ```
+
+### Visualize
+
+Visualized using the [tasseo](https://github.com/obfuscurity/tasseo).
+
 
 # License
 under the MIT License:

@@ -8,7 +8,7 @@ config = {
 
 i = Influxdb::Client.new(config)
 
-points = [ 19.1, "hogehoge" ]
+points = [ ARGV[0].to_f, "hogehoge" ]
 query = "select * from Disk_Used limit 1"
 
 data = [{
