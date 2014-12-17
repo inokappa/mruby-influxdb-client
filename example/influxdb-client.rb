@@ -8,13 +8,18 @@ config = {
 
 i = Influxdb::Client.new(config)
 
+points = [ 19.1, "hogehoge" ]
+query = "select * from Disk_Used limit 1"
+
 data = [{
   :name => "Disk_Used",
   :columns => ["value", "host"],
   :points => [
-    [19.1, "hogehoge"]
+    points
   ]
 }]
 
 puts "request:  #{JSON::stringify(data)}"
 puts "response: #{i.post(data)["body"]}"
+
+puts "response: #{i.get_metrics(query).body}"
