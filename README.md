@@ -138,6 +138,7 @@ curl -s -G 'http://localhost:8086/db/foo/series?u=root&p=root' --data-urlencode 
 
 Visualized using the [tasseo](https://github.com/obfuscurity/tasseo).
 
+![](https://qiita-image-store.s3.amazonaws.com/0/24438/95581c50-dfcd-47e0-55a6-4b68a3969cd0.gif)
 
 # License
 under the MIT License:
